@@ -15,7 +15,7 @@ client.connect((err) => {
         console.log(err);
         return;
     }
-   console.log("Database connected Successfully");
+   console.log("Postgres connected Successfully");
 });
 
 module.exports = client;
