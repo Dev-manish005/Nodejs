@@ -1,4 +1,4 @@
-function main(req, res, client) {
+function main(req, res, client, appEnv) {
 
     // client.connect((err) => {
     //     if (err) {
@@ -8,6 +8,34 @@ function main(req, res, client) {
     //     }
 
         let { first_name, last_name, mobile, email, role } = req.body;
+        client.query(`Select email from users where mobile = $1 and is_obsolete = 0; `,[mobile],(err,data) =>{
+
+            if (err) {
+                // console.log(err);
+                // const response_obj = {
+                //     "suceess": false,
+                //     "data": null,
+                //     "err": err,
+                //     "err_id": "100011"
+                // }
+                // res.status(400).send(response_obj);
+                appEnv.responseGenerator.sendResponse(res,true,400,null,err,appEnv.getCurrentLine());
+                return;
+            }
+            if (data.rows.length !=0) {
+                // console.log(err);
+                // const response_obj = {
+                //     "suceess": true,
+                //     "data": {
+                //         msg : "User Already Exits !!!"
+                //     },
+                //     "err": err,
+                //     "err_id": "null"
+                // }
+                // res.status(200).send(response_obj);
+                appEnv.responseGenerator.sendResponse(res,false,200,{msg:"user already exist"},null,null);
+                return;
+            }
 
         const insertQuery = `
         Insert into users(user_name,mobile,email,role,password) values($1,$2,$3,$4,$5);
@@ -31,7 +59,7 @@ function main(req, res, client) {
 
             res.status(200).send("Data inserted successfully");
         });
-    // });
+    });
 }
 
 module.exports = {

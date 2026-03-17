@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+const appEnv = require('./src/base/appEnvironmentBuilder').getAppEnvironment(__dirname);
+console.log("App.js  =>", appEnv);
 const bodyParser = require('body-parser')
 
 app.use(bodyParser.urlencoded())
@@ -21,7 +23,7 @@ app.post('/body/', (req, res) => {
     res.send(req.body)
 })
 
-require(__dirname + '/router')(app);
+require(__dirname + '/router')(app, appEnv);
 
 
 app.listen(9998, () => {

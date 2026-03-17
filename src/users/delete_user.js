@@ -1,4 +1,4 @@
-function main(req, res, client) {
+function main(req, res, client,appEnv) {
 
     let { id } = req.params;
 

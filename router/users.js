@@ -1,6 +1,6 @@
 
-module.exports = function (app, client) {
-
+module.exports = function (app, client, appEnv) {
+	console.log("user route",appEnv);
 	let currPath = "/users";
 
 	/* GET URLs */
@@ -11,14 +11,14 @@ module.exports = function (app, client) {
 	app.get(currPath + "/get_user/:id/", function (req, res) {
 
 		let urlLogicOBJ = require(__dirname + "/../src/users/get_user.js");
-		urlLogicOBJ.main(req, res, client);
+		urlLogicOBJ.main(req, res, client,appEnv);
 	});
 
     // URL: /users/get_user_list/:id/
 	app.get(currPath + "/get_user_list", function (req, res) {
 
 		let urlLogicOBJ = require(__dirname + "/../src/users/get_user_list.js");
-		urlLogicOBJ.main(req, res, client);
+		urlLogicOBJ.main(req, res, client,appEnv);
 	});
 
 
@@ -28,7 +28,7 @@ module.exports = function (app, client) {
 	app.post(currPath + "/create_user", function (req, res) {
 
 		let urlLogicOBJ = require(__dirname + "/../src/users/create_user.js");
-		urlLogicOBJ.main(req, res, client);
+		urlLogicOBJ.main(req, res, client, appEnv);
 	});
 
 
@@ -40,7 +40,7 @@ module.exports = function (app, client) {
 	app.delete(currPath + "/delete_user/:id", function (req, res) {
 
 		let urlLogicOBJ = require(__dirname + "/../src/users/delete_user.js");
-		urlLogicOBJ.main(req, res, client);
+		urlLogicOBJ.main(req, res, client,appEnv);
 	});
 
 };
